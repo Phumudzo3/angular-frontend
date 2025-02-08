@@ -40,7 +40,7 @@ export class HomeComponent {
     });
     
     this.http
-      .post<any>('http://localhost:3000/api/order/stripeCheckout', data)
+      .post<any>('https://app-dev-juri.onrender.com/api/order/stripeCheckout', data)
       .pipe(take(1))
       .subscribe({
        next: async (session) => {
