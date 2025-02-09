@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
    "build": "ng build --configuration production",
-  "start": "http-server dist/my-angular-app"  
+  "start": "dist/my-angular-app"  
   },
   "private": true,
   "dependencies": {
