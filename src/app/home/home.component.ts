@@ -1,20 +1,22 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { take } from 'rxjs';
+import { first } from 'rxjs';
 import { loadStripe } from '@stripe/stripe-js';
-import { environment } from '../../environments/environment'; // Import environment
 
 @Component({
   selector: 'app-home',
   standalone: false,
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  message: string = ''; // Holds the message to display
+
   constructor(private http: HttpClient) {}
 
   payWithStripe() {
-    console.log('Payment process started. Preparing request...'); // Log start message
+    this.message = 'Processing your payment, please wait...'; // Set initial message
+
     const data = new HttpParams({
       fromObject: {
         order: JSON.stringify([
@@ -23,36 +25,31 @@ export class HomeComponent {
             store_id: '6786d4630d6deec766256532',
             category_id: '678192009b6e820ebdcc6e07',
             sub_category_id: '6782aa76ec82fa36dce623ed',
-            product_name: 'livhu restaurant',
+            product_name: 'livhuw',
             description: 'cotton tshirt',
             sku: 'thre2',
-            images: [
-              'src\\uploads\\productImages\\1736889588852-355129379Screenshot (37).png',
-              'src\\uploads\\productImages\\1736889588864-889553150Screenshot (38).png',
-            ],
+            images: ['src\\uploads\\productImages\\1736889588852-355129379Screenshot (37).png'],
             price: 500,
             quantity: 5,
             status: true,
-          },
+          }
         ]),
         deliveryCharge: 20,
       },
     });
 
-    this.http
-      .post<any>(`${environment.apiUrl}/api/order/stripeCheckout`, data) // Use apiUrl from environment
-      .pipe(take(1))
-      .subscribe({
-        next: async (session) => {
-          try {
-            console.log('Payment session created successfully:', session.id); // Log session ID for reference
-            const stripe = await loadStripe('pk_test_51O0gq3F71lqZQv1BeofSsRihCVfY63EdQT29fNod5ssZ2A3i3WKqmDjFSgCwJgfFNUuamw9nwez2TD1LAtK8mwcq00kR8VfBBc');
-            await stripe?.redirectToCheckout({ sessionId: session.id });
-            console.log('Redirecting to Stripe checkout...');
-          } catch (error) {
-            console.error('Error during Stripe redirect:', error);
-          }
-        },
-      });
+    this.http.post<any>('https://app-dev-juri.onrender.com/api/order/stripeCheckout', data).pipe(first()).subscribe({
+      next: async (session) => {
+        const stripe = await loadStripe('pk_test_51O0gq3F71lqZQv1BeofSsRihCVfY63EdQT29fNod5ssZ2A3i3WKqmDjFSgCwJgfFNUuamw9nwez2TD1LAtK8mwcq00kR8VfBBc');
+        stripe?.redirectToCheckout({
+          sessionId: session.id,
+        });
+        this.message = ''; // Clear the message when redirection happens
+      },
+      error: (err) => {
+        console.error(err);
+        this.message = 'An error occurred during payment. Please try again.'; // Show error message
+      },
+    });
   }
 }
