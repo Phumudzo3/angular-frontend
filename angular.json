@@ -24,6 +24,7 @@
           "builder": "@ngx-env/builder:application",
           "options": {
             "outputPath": "dist/my-angular-app",
+            
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [

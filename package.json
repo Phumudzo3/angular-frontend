@@ -1,17 +1,11 @@
 {
   "name": "my-angular-app",
   "version": "0.0.0",
-  "scripts": {
-   
+ "scripts": {
   "build": "ng build --configuration production",
-  "start": "node dist/my-angular-app/server/main.js",
-  "postinstall": "ng build --configuration=production",
-    "ng": "ng",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:my-angular-app": "node dist/my-angular-app/server/server.mjs"
-
-  },
+  "postinstall": "ng build --configuration production",
+  "start": "node dist/my-angular-app/browser/main.js"
+},
   "private": true,
   "dependencies": {
     "@angular/animations": "^19.1.0",
