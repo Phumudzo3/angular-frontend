@@ -2,13 +2,15 @@
   "name": "my-angular-app",
   "version": "0.0.0",
   "scripts": {
+   
+  "build": "ng build --configuration production",
+  "start": "node dist/my-angular-app/server/main.js",
+  "postinstall": "ng build --configuration=production",
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:my-angular-app": "node dist/my-angular-app/server/server.mjs",
-    "postinstall": "ng build --configuration=production"
+    "serve:ssr:my-angular-app": "node dist/my-angular-app/server/server.mjs"
+
   },
   "private": true,
   "dependencies": {
