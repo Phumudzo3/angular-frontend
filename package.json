@@ -4,7 +4,7 @@
  "scripts": {
   "build": "ng build --configuration production",
   "postinstall": "ng build --configuration production",
-  "start": "node dist/my-angular-app/browser/main.js"
+   "start": "npx http-server dist/my-angular-app/browser -p 8080"
 },
   "private": true,
   "dependencies": {
