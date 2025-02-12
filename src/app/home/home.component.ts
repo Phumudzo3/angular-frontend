@@ -38,7 +38,7 @@ export class HomeComponent {
       },
     });
 
-    this.http.post<any>('https://app-dev-juri.onrender.com/api/order/stripeCheckout', data).pipe(first()).subscribe({
+    this.http.post<any>('https://backend-food-app-pz8p.onrender.com/api/order/stripeCheckout', data).pipe(first()).subscribe({
       next: async (session) => {
         const stripe = await loadStripe('pk_test_51O0gq3F71lqZQv1BeofSsRihCVfY63EdQT29fNod5ssZ2A3i3WKqmDjFSgCwJgfFNUuamw9nwez2TD1LAtK8mwcq00kR8VfBBc');
         stripe?.redirectToCheckout({
